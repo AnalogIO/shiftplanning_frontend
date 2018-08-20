@@ -1,0 +1,8 @@
+<label>email:
+  <input [(ngModel)]="loginInfo.username" placeholder="test@analogio.dk">
+</label>
+<label>password:
+  <input [(ngModel)]="loginInfo.password" type="password">
+</label>
+
+<input type="button" value="login" (click)="login(loginInfo.username, loginInfo.password)">
