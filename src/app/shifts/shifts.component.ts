@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ShiftService } from '../shift.service';
+import { Shift } from './shift';
 
 @Component({
   selector: 'app-shifts',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShiftsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private shiftService: ShiftService) { }
+
+  shifts: Shift[];
 
   ngOnInit() {
+    this.getShifts();
   }
+
+  getShifts(): void {
+    this.shiftService.getShifts()
+    .subscribe(shifts => this.shifts = shifts);
+  }
+
 
 }

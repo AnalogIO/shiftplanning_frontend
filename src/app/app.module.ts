@@ -2,6 +2,7 @@ import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpClientModule }    from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -11,6 +12,7 @@ import {
 } from './auth-guard.service';
 import { ShiftsComponent } from './shifts/shifts.component';
 import { AuthService } from './auth.service';
+import { EmployeesComponent } from './employees/employees.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,7 +25,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    ShiftsComponent
+    ShiftsComponent,
+    EmployeesComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -31,7 +34,8 @@ const appRoutes: Routes = [
       { enableTracing: true } // <-- debugging purposes only
     ),
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [AuthGuardService, AuthService],
   bootstrap: [AppComponent]

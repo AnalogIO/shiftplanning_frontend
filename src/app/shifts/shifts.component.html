@@ -1,3 +1,7 @@
-<p>
-  shifts works!
-</p>
+<ul>
+  <li *ngFor="let shift of shifts">
+    <a routerLink="/shifts/{{shift.id}}">
+      <span class="badge">ShiftId: {{ shift.id }}</span> From: {{ shift.start | date:"MM/dd/yy HH:mm" }} To: {{ shift.end | date:"MM/dd/yy HH:mm" }}
+    </a>
+  </li>
+</ul>
