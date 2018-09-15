@@ -2,6 +2,6 @@ import { Employee } from "../employees/employee";
 
 export class Checkin {
     id: number;
-    dateTime: Date;
+    time: Date;
     employee: Employee;
 }

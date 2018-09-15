@@ -12,6 +12,7 @@ export class ShiftsComponent implements OnInit {
   constructor(private shiftService: ShiftService) { }
 
   shifts: Shift[];
+  selectedShift: Shift;
 
   ngOnInit() {
     this.getShifts();
@@ -22,5 +23,8 @@ export class ShiftsComponent implements OnInit {
     .subscribe(shifts => this.shifts = shifts);
   }
 
+  onSelect(shift: Shift): void {
+    this.selectedShift = shift;
+  }
 
 }

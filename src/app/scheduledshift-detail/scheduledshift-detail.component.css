@@ -1,0 +1,9 @@
+.remove-employee {
+    float: right;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.remove-employee::selection {
+    background:transparent; /* WebKit/Blink Browsers */
+  }

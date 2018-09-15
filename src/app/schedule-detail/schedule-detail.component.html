@@ -1,0 +1,30 @@
+<div *ngIf="schedule">
+  <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+          <li class="breadcrumb-item"><a routerLink="/schedules">Schedules</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{schedule.name}}</li>
+      </ol>
+  </nav>
+  <div class="row">
+    <div class="col">
+      <h2>{{schedule.name | uppercase}} Details</h2>
+      <div><span>id: </span>{{schedule.id}}</div>
+      <div><span>numberOfWeeks: </span>{{schedule.numberOfWeeks}}</div>
+      <h4>Scheduled shifts:</h4>
+      
+      <div class="card schedule-day" *ngFor='let in of counter(schedule.numberOfWeeks*7);let i = index'>
+        <h6 class="card-header">{{dayOfWeekAsString(i+1)}} (Week: {{weekOfDay(i+1)}})</h6>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item" *ngFor="let scheduledShift of schedule.scheduledShifts | filter: (i+1)" [class.selected]="scheduledShift === selectedScheduledShift" (click)="onSelect(scheduledShift)">
+            <h6 class="card-title">From: {{scheduledShift.start}} End: {{scheduledShift.end}}</h6>
+            <div *ngFor="let employee of scheduledShift.employees">{{employee.firstName}} {{employee.lastName}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+        <app-scheduledshift-detail [scheduleId]="schedule.id" [data]="selectedScheduledShift" (valueChange)="updateScheduledShift($event)"></app-scheduledshift-detail>
+    </div>
+  </div>
+</div>

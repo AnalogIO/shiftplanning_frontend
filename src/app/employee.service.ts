@@ -2,35 +2,33 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Shift } from './shifts/shift';
+import { Employee } from './employees/employee';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShiftService {
+export class EmployeeService {
 
   private apiUrl = 'https://analogio.dk/shiftplanning/api';  // URL to web API
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  public getShift(id: number): Observable<Shift> {
-    const url = `${this.apiUrl}/shifts/${id}`;
+  public getEmployee(id: number): Observable<Employee> {
+    const url = `${this.apiUrl}/Employees/${id}`;
     return this.http.get(url, {headers: this.authService.createAuthorizationHeader()} ).pipe(
-      tap((shifts: Shift) => {
+      tap((Employees: Employee) => {
       }),
-      catchError(this.handleError<Shift>('getShifts'))
+      catchError(this.handleError<Employee>('getEmployees'))
     );
   }
   
-  public getShifts(): Observable<Shift[]> {
-    var today = new Date().toISOString().slice(0, 10) + "T00:00:00";
-    const url = `${this.apiUrl}/shifts?from=${today}&to=2099-01-01T00:00:00`;
-    return this.http.get(url, {headers: this.authService.createAuthorizationHeader()} ).pipe(
-      tap((shifts: Shift[]) => {
-        shifts.sort((n1,n2) => new Date(n1.start).getTime() - new Date(n2.start).getTime());
+  public getEmployees(): Observable<Employee[]> {
+    return this.http.get(`${this.apiUrl}/employees`, {headers: this.authService.createAuthorizationHeader()} ).pipe(
+      tap((Employees: Employee[]) => {
+        
       }),
-      catchError(this.handleError<Shift[]>('getShifts'))
+      catchError(this.handleError<Employee[]>('getEmployees'))
     );
   }
 

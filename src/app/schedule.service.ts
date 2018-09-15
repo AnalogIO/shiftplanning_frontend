@@ -2,35 +2,42 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Shift } from './shifts/shift';
+import { Schedule } from './schedules/schedule';
+import { ScheduledShift } from './schedules/scheduledShift';
 import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShiftService {
+export class ScheduleService {
 
   private apiUrl = 'https://analogio.dk/shiftplanning/api';  // URL to web API
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  public getShift(id: number): Observable<Shift> {
-    const url = `${this.apiUrl}/shifts/${id}`;
+  public getSchedule(id: number): Observable<Schedule> {
+    const url = `${this.apiUrl}/schedules/${id}`;
     return this.http.get(url, {headers: this.authService.createAuthorizationHeader()} ).pipe(
-      tap((shifts: Shift) => {
+      tap((schedule: Schedule) => {
       }),
-      catchError(this.handleError<Shift>('getShifts'))
+      catchError(this.handleError<Schedule>('getSchedules'))
     );
   }
   
-  public getShifts(): Observable<Shift[]> {
-    var today = new Date().toISOString().slice(0, 10) + "T00:00:00";
-    const url = `${this.apiUrl}/shifts?from=${today}&to=2099-01-01T00:00:00`;
+  public getSchedules(): Observable<Schedule[]> {
+    const url = `${this.apiUrl}/schedules`;
     return this.http.get(url, {headers: this.authService.createAuthorizationHeader()} ).pipe(
-      tap((shifts: Shift[]) => {
-        shifts.sort((n1,n2) => new Date(n1.start).getTime() - new Date(n2.start).getTime());
+      tap((schedules: Schedule[]) => {
       }),
-      catchError(this.handleError<Shift[]>('getShifts'))
+      catchError(this.handleError<Schedule[]>('getSchedules'))
+    );
+  }
+
+  public updateScheduledShift (scheduleId: number, scheduledShift: ScheduledShift): Observable<any> {
+    const url = `${this.apiUrl}/schedules/${scheduleId}/${scheduledShift.id}`;
+    return this.http.put(url, scheduledShift, {headers: this.authService.createAuthorizationHeader()}).pipe(
+      tap(_ => console.log(`updated scheduledshift id=${scheduledShift.id}`)),
+      catchError(this.handleError<any>('updateScheduledShift'))
     );
   }
 

@@ -1,0 +1,12 @@
+li.list-group-item:hover {
+    cursor: pointer;
+    background-color: #eeeeee;
+}
+
+.schedule-day {
+    margin-top: 1em;
+}
+
+li.list-group-item.selected {
+    background-color: #dddddd;
+}

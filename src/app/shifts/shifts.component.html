@@ -1,7 +1,26 @@
-<ul>
-  <li *ngFor="let shift of shifts">
-    <a routerLink="/shifts/{{shift.id}}">
-      <span class="badge">ShiftId: {{ shift.id }}</span> From: {{ shift.start | date:"MM/dd/yy HH:mm" }} To: {{ shift.end | date:"MM/dd/yy HH:mm" }}
-    </a>
-  </li>
-</ul>
+<div class="row">
+  <div class="col">
+    <h2>Shifts</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Start</th>
+          <th scope="col">End</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let shift of shifts" [class.selected]="shift === selectedShift" (click)="onSelect(shift)">
+          <th scope="row">{{shift.id}}</th>
+          <td>{{ shift.start | date:"dd/MM/yy HH:mm" }}</td>
+          <td>{{ shift.end | date:"dd/MM/yy HH:mm" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <app-shift-detail [shift]="selectedShift"></app-shift-detail>
+  </div>
+</div>
+
+

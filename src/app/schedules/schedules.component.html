@@ -1,0 +1,27 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Schedules</li>
+    </ol>
+</nav>
+<div class="row">
+  <div class="col">
+    <h2>Schedules</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>NumberOfWeeks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let schedule of schedules" [class.selected]="schedule === selectedSchedule" (click)="onSelect(schedule)" routerLink="/schedules/{{schedule.id}}">
+          <th>{{schedule.id}}</th>
+          <td>{{ schedule.name }}</td>
+          <td>{{ schedule.numberOfWeeks }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

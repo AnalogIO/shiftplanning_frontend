@@ -1,0 +1,23 @@
+<div *ngIf="shift">
+
+  <h2>{{shift.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{shift.id}}</div>
+  <div><span>start: </span>{{shift.start | date:"dd/MM/yy HH:mm" }}</div>
+  <div><span>end: </span>{{shift.end | date:"dd/MM/yy HH:mm" }}</div>
+  <h4>Employees assigned to shift</h4>
+  <ul>
+    <li *ngFor="let employee of shift.employees">
+      <a routerLink="/employees/{{employee.id}}">
+        <span>EmployeeId: {{ employee.id }}</span> | {{ employee.firstName }} {{ employee.lastName }}
+      </a>
+    </li>
+  </ul>
+
+  <h4>Employees checked in</h4> 
+  <ul>
+    <li *ngFor="let checkin of shift.checkIns">
+      <span>CheckinId: {{ checkin.id }}</span> | {{ checkin.employee.firstName }} {{ checkin.employee.lastName }} at {{ checkin.time | date:"dd/MM/yy HH:mm" }}
+    </li>
+  </ul>
+
+</div>

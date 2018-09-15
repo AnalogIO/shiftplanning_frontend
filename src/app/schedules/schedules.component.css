@@ -4,4 +4,5 @@ tbody > tr.selected {
 
 tbody > tr:hover {
     cursor: pointer;
+    background-color: #eee;
 }
