@@ -37,5 +37,7 @@
       [(ngModel)]="scheduledShift.employees">
     </ng-select>
     <br>
-    <button type="button" class="btn btn-primary" (click)="update()">Save</button>
+    <button type="button" class="btn btn-primary" (click)="update()" *ngIf="!isNewScheduledShift">Save</button>
+    <button type="button" class="btn btn-danger float-right" (click)="delete()" *ngIf="!isNewScheduledShift">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="create()" *ngIf="isNewScheduledShift">Create</button>
 </div>

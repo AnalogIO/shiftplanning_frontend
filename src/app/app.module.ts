@@ -6,6 +6,7 @@ import { HttpClientModule }    from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -57,7 +58,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     NgSelectModule,
-    LoadingBarHttpClientModule
+    LoadingBarHttpClientModule,
+    NgbModule
   ],
   providers: [AuthGuardService, AuthService],
   bootstrap: [AppComponent]

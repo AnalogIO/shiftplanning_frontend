@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Schedule } from '../schedules/schedule';
 import { ScheduleService } from '../schedule.service';
 import { ScheduledShift } from '../schedules/scheduledShift';
-import { markParentViewsForCheck, checkAndUpdateBinding } from '@angular/core/src/view/util';
 
 @Component({
   selector: 'app-schedule-detail',
@@ -13,6 +12,8 @@ import { markParentViewsForCheck, checkAndUpdateBinding } from '@angular/core/sr
 export class ScheduleDetailComponent implements OnInit {
   private schedule: Schedule;
   private selectedScheduledShift: ScheduledShift;
+  private newScheduledShift: boolean;
+
   @Input()
   set _schedule(_schedule: Schedule) {
     if(_schedule != null) {
@@ -44,17 +45,43 @@ export class ScheduleDetailComponent implements OnInit {
   }
 
   updateScheduledShift(scheduledShift: ScheduledShift): void {
-    if(scheduledShift == null) return;
+    if(scheduledShift == null) {
+      this.getSchedule();
+      this.selectedScheduledShift = null;
+      return;
+    }
+
     let updateItem = this.schedule.scheduledShifts.find(x => x.id == scheduledShift.id);
     let index = this.schedule.scheduledShifts.indexOf(updateItem);
     this.schedule.scheduledShifts[index] = scheduledShift;
     this.schedule = JSON.parse(JSON.stringify(this.schedule)); // hack the binding :-/
     this.selectedScheduledShift = this.schedule.scheduledShifts[index];
   }
+
+  createdScheduledShiftEvent(scheduledShift: ScheduledShift): void {
+    if(scheduledShift == null) {
+      this.selectedScheduledShift = null;
+      return;
+    }
+
+    this.schedule.scheduledShifts.push(scheduledShift);
+    this.schedule = JSON.parse(JSON.stringify(this.schedule)); // hack the binding :-/
+    let createdItem = this.schedule.scheduledShifts.find(x => x.id == scheduledShift.id);
+    let index = this.schedule.scheduledShifts.indexOf(createdItem);
+    this.onSelect(this.schedule.scheduledShifts[index]);
+    this.newScheduledShift = false;
+  }
   
   onSelect(scheduledShift: ScheduledShift): void {
+    this.newScheduledShift = false;
     this.selectedScheduledShift = scheduledShift;
     this.selectedScheduledShift.employees = scheduledShift.employees.map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });
+  }
+
+  selectNewScheduledShift(day: number): void {
+    this.selectedScheduledShift = new ScheduledShift();
+    this.selectedScheduledShift.day = day;
+    this.newScheduledShift = true;
   }
 
   dayOfWeekAsString(dayIndex): string {

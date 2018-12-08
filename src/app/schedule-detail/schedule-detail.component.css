@@ -10,3 +10,8 @@ li.list-group-item:hover {
 li.list-group-item.selected {
     background-color: #dddddd;
 }
+
+.link {
+    cursor: pointer;
+    font-weight: 400 !important;
+}

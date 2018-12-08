@@ -6,7 +6,11 @@
 </nav>
 <div class="row">
   <div class="col">
-    <h2>Schedules</h2>
+    <h2>
+      Schedules
+      <button type="button" class="btn btn-primary btn-sm float-right" (click)="openModal(content)">Create schedule</button>
+    </h2>
+    
     <table class="table">
       <thead>
         <tr>
@@ -25,3 +29,30 @@
     </table>
   </div>
 </div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create schedule</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label class="form-check-label" for="name">
+              Schedule Name:
+            </label>
+          <input #name class="form-control" type="text" placeholder="Fall 2020" id="name" autofocus required>
+
+          <label class="form-check-label" for="numofweeks">
+              Number of weeks:
+            </label>
+          <input #numberOfWeeks class="form-control" type="number" placeholder="2" id="numofweeks" required>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="createSchedule(name.value, numberOfWeeks.value)">Create</button>
+    </div>
+  </ng-template>

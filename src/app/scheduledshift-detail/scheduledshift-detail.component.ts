@@ -17,6 +17,8 @@ export class ScheduledshiftDetailComponent implements OnInit {
 
   @Input() scheduleId: number;
 
+  @Input() isNewScheduledShift: boolean;
+
   @Input()
   set data(scheduledshift: ScheduledShift) {
     if(scheduledshift == null) return;
@@ -40,5 +42,23 @@ export class ScheduledshiftDetailComponent implements OnInit {
       .subscribe(() => {
         this.valueChange.emit(this.scheduledShift);
       });
+  }
+
+  create(): void {
+    // call scheduleservice to create
+    this.scheduledShift.employeeIds = this.scheduledShift.employees.map(e => e.id);
+    this.scheduleService.createScheduledShift(this.scheduleId, this.scheduledShift)
+      .subscribe(dto => {
+        this.scheduledShift = dto;
+        this.valueChange.emit(this.scheduledShift);
+      });
+  }
+
+  delete(): void {
+    this.scheduleService.deleteScheduledShift(this.scheduleId, this.scheduledShift.id)
+    .subscribe(() => {
+      this.scheduledShift = null;
+      this.valueChange.emit(null);
+    });
   }
 }
