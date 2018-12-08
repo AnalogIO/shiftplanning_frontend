@@ -11,7 +11,7 @@ import { EmployeeService } from '../employee.service';
 })
 export class ScheduledshiftDetailComponent implements OnInit {
 
-  private scheduledShift: ScheduledShift;
+  scheduledShift: ScheduledShift;
 
   @Output() valueChange = new EventEmitter();
 

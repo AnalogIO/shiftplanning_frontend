@@ -1,5 +1,13 @@
-<p>
-  employee-detail works!
-</p>
-
-<p>{{ data }}</p>
+<div class="card" *ngIf="employee">
+  <h5 class="card-header">{{ employee.firstName }} {{employee.lastName}}</h5>
+  <div class="card-body">
+    <img [src]="employee.photoRef" class="rounded-circle profile-pic">
+    <ul class="list-group list-group-flush mt-4">
+        <li class="list-group-item">Id: {{ employee.id }}</li>
+        <li class="list-group-item">Email: {{ employee.email }}</li>
+        <li class="list-group-item">Active: {{ employee.active }}</li>
+        <li class="list-group-item">Title: {{ employee.employeeTitle }}</li>
+        <li class="list-group-item">CheckIns: {{ employee.checkInCount }}</li>
+      </ul>
+  </div>
+</div>

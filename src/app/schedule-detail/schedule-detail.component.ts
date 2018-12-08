@@ -10,9 +10,9 @@ import { ScheduledShift } from '../schedules/scheduledShift';
   styleUrls: ['./schedule-detail.component.css']
 })
 export class ScheduleDetailComponent implements OnInit {
-  private schedule: Schedule;
-  private selectedScheduledShift: ScheduledShift;
-  private newScheduledShift: boolean;
+  schedule: Schedule;
+  selectedScheduledShift: ScheduledShift;
+  newScheduledShift: boolean;
 
   @Input()
   set _schedule(_schedule: Schedule) {
