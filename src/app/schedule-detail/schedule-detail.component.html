@@ -8,10 +8,13 @@
   </nav>
   <div class="row">
     <div class="col">
-      <h2>{{schedule.name | uppercase}} Details</h2>
-      <div><span>id: </span>{{schedule.id}}</div>
-      <div><span>numberOfWeeks: </span>{{schedule.numberOfWeeks}}</div>
-      <h4>Scheduled shifts:</h4>
+      <h2>{{schedule.name}}</h2>
+      <div>id: {{schedule.id}}</div>
+      <div>numberOfWeeks: {{schedule.numberOfWeeks}}</div>
+
+      <button type="button" class="btn btn-info btn-sm mt-2" (click)="openModal(content)">Roll out</button>
+      
+      <h4 class="mt-3">Scheduled shifts:</h4>
       
       <div class="card schedule-day" *ngFor='let in of counter(schedule.numberOfWeeks*7);let i = index'>
         <h6 class="card-header">{{dayOfWeekAsString(i+1)}} (Week: {{weekOfDay(i)}}) <a class="text-primary float-right link" (click)="selectNewScheduledShift(i+1)">Add scheduled shift</a></h6>
@@ -33,3 +36,40 @@
     </div>
   </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Roll out {{ schedule.name}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="row">
+          <div class="col">
+              <label class="form-check-label" for="from">
+                  From:
+                </label>  
+            <ngb-datepicker [(ngModel)]="from" name="from"></ngb-datepicker>
+          </div>
+          <div class="col">
+              <label class="form-check-label" for="from">
+                  To:
+                </label>  
+            <ngb-datepicker [(ngModel)]="to" name="to"></ngb-datepicker>
+          </div>
+        </div>
+        
+        <label class="form-check-label" for="startFromScheduledWeek">
+          Start from week:
+        </label>
+      <input #startFromScheduledWeek class="form-control" type="number" placeholder="1" id="startFromScheduledWeek" required>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="rollout(from, to, startFromScheduledWeek.value)">Roll out</button>
+  </div>
+</ng-template>

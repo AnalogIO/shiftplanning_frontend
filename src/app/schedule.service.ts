@@ -65,6 +65,21 @@ export class ScheduleService {
     );
   }
 
+  public rollOut(scheduleId: number, from: string, to:string, startFromScheduledWeek: number): Observable<any> {
+    const url = `${this.apiUrl}/schedules/${scheduleId}`;
+
+    var dto = {
+      from: from,
+      to: to,
+      startFromScheduledWeek: startFromScheduledWeek
+    };
+
+    return this.http.post(url, dto, {headers: this.authService.createAuthorizationHeader()} ).pipe(
+      tap(_ => console.log(`rolled out schedule id=${scheduleId} from=${from} to=${to} startFromScheduledWeek=${startFromScheduledWeek}`)),
+      catchError(this.handleError<any>('rollOut'))
+    );
+  }
+
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
  

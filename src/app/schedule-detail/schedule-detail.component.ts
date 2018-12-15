@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Schedule } from '../schedules/schedule';
 import { ScheduleService } from '../schedule.service';
 import { ScheduledShift } from '../schedules/scheduledShift';
+import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-schedule-detail',
@@ -22,12 +23,16 @@ export class ScheduleDetailComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private scheduleService: ScheduleService) { }
+  constructor(private route: ActivatedRoute, private scheduleService: ScheduleService, private modalService: NgbModal) { }
 
   ngOnInit() {
     if(this.schedule == null) {
       this.getSchedule();
     }
+  }
+
+  openModal(content): void {
+    this.modalService.open(content, {size: 'lg'});
   }
 
   getSchedule(): void {
@@ -70,6 +75,15 @@ export class ScheduleDetailComponent implements OnInit {
     let index = this.schedule.scheduledShifts.indexOf(createdItem);
     this.onSelect(this.schedule.scheduledShifts[index]);
     this.newScheduledShift = false;
+  }
+
+  rollout(from: NgbDateStruct, to: NgbDateStruct, startFrom: number): void {
+    var fromStr = `${from.day}-${from.month}-${from.year.toString().slice(-2)}`;
+    var toStr = `${to.day}-${to.month}-${to.year.toString().slice(-2)}`;
+    this.scheduleService.rollOut(this.schedule.id, fromStr, toStr, startFrom)
+    .subscribe(() => {
+      this.modalService.dismissAll();
+    });
   }
   
   onSelect(scheduledShift: ScheduledShift): void {
