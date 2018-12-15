@@ -19,7 +19,7 @@
     </table>
   </div>
   <div class="col">
-    <app-shift-detail [shift]="selectedShift"></app-shift-detail>
+    <app-shift-detail [shift]="selectedShift" (valueChange)="shiftUpdated($event)"></app-shift-detail>
   </div>
 </div>
 

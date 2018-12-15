@@ -65,8 +65,8 @@ export class ScheduleService {
     );
   }
 
-  public rollOut(scheduleId: number, from: string, to:string, startFromScheduledWeek: number): Observable<any> {
-    const url = `${this.apiUrl}/schedules/${scheduleId}`;
+  public rollOut(scheduleId: number, from: string, to:string, startFromScheduledWeek: number): Observable<ScheduledShift[]> {
+    const url = `${this.apiUrl}/schedules/${scheduleId}/rollout`;
 
     var dto = {
       from: from,

@@ -81,8 +81,13 @@ export class ScheduleDetailComponent implements OnInit {
     var fromStr = `${from.day}-${from.month}-${from.year.toString().slice(-2)}`;
     var toStr = `${to.day}-${to.month}-${to.year.toString().slice(-2)}`;
     this.scheduleService.rollOut(this.schedule.id, fromStr, toStr, startFrom)
-    .subscribe(() => {
-      this.modalService.dismissAll();
+    .subscribe(dto => {
+      if(dto != null) {
+        this.modalService.dismissAll();
+        alert(`Rolled out ${dto.length} shifts with success!`);
+      } else {
+        alert("Could not roll out...");
+      }
     });
   }
   

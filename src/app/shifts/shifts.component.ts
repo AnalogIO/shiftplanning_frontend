@@ -27,4 +27,12 @@ export class ShiftsComponent implements OnInit {
     this.selectedShift = shift;
   }
 
+  shiftUpdated(shift: Shift): void {
+    if(shift == null) {
+      this.selectedShift = null;
+      this.getShifts();
+      return;
+    }
+  }
+
 }

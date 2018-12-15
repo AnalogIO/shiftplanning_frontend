@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Shift } from '../shifts/shift';
 import { ShiftService } from '../shift.service';
 
@@ -12,7 +12,9 @@ export class ShiftDetailComponent implements OnInit {
 
   @Input() shift: Shift;
 
-  constructor(private route: ActivatedRoute, private shiftService: ShiftService) { }
+  @Output() valueChange = new EventEmitter();
+
+  constructor(private route: ActivatedRoute, private shiftService: ShiftService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -21,6 +23,14 @@ export class ShiftDetailComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.shiftService.getShift(id)
       .subscribe(shift => this.shift = shift);
+  }
+
+  delete(shift: Shift): void {
+    this.shiftService.deleteShift(shift.id)
+    .subscribe(() => {
+      this.shift = null;
+      this.valueChange.emit(null);
+    });
   }
 
 }
