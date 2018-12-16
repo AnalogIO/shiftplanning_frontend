@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../schedule.service';
 import { Schedule } from './schedule';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BreadcrumbService } from '../breadcrumb.service';
 
 @Component({
   selector: 'app-schedules',
@@ -26,7 +27,7 @@ export class SchedulesComponent implements OnInit {
 
   getSchedules(): void {
     this.scheduleService.getSchedules()
-    .subscribe(schedules => this.schedules = schedules);
+      .subscribe(schedules => this.schedules = schedules);
   }
 
   onSelect(schedule: Schedule): void {
@@ -36,11 +37,11 @@ export class SchedulesComponent implements OnInit {
   createSchedule(name: string, numberOfWeeks: number) {
     this.modalService.dismissAll();
     this.scheduleService.createSchedule(name, numberOfWeeks)
-    .subscribe(dto => {
-      if(dto != null) {
-        this.schedules.push(dto);
-      }
-    });
+      .subscribe(dto => {
+        if (dto != null) {
+          this.schedules.push(dto);
+        }
+      });
   }
 
 }

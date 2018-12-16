@@ -2,17 +2,17 @@ import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
-import { 
-  AuthGuardService as AuthGuard, AuthGuardService 
+import {
+  AuthGuardService as AuthGuard, AuthGuardService
 } from './auth-guard.service';
 import { ShiftsComponent } from './shifts/shifts.component';
 import { AuthService } from './auth.service';
@@ -23,9 +23,11 @@ import { SchedulesComponent } from './schedules/schedules.component';
 import { ScheduleDetailComponent } from './schedule-detail/schedule-detail.component';
 import { ScheduledshiftDetailComponent } from './scheduledshift-detail/scheduledshift-detail.component';
 import { FilterPipe } from './filter.pipe';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { NavigationbarComponent } from './navigationbar/navigationbar.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'shifts', pathMatch: 'full'},
+  { path: '', redirectTo: 'shifts', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'shifts', component: ShiftsComponent, canActivate: [AuthGuard] },
   { path: 'shifts/:id', component: ShiftDetailComponent, canActivate: [AuthGuard] },
@@ -46,7 +48,9 @@ const appRoutes: Routes = [
     SchedulesComponent,
     ScheduleDetailComponent,
     ScheduledshiftDetailComponent,
-    FilterPipe
+    FilterPipe,
+    BreadcrumbComponent,
+    NavigationbarComponent
   ],
   imports: [
     RouterModule.forRoot(

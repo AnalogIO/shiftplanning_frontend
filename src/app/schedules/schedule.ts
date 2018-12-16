@@ -3,7 +3,7 @@ import { ScheduledShift } from "./scheduledShift";
 
 export class Schedule {
     id: number;
-    name: String;
+    name: string;
     numberOfWeeks: number;
     scheduledShifts: ScheduledShift[];
 }

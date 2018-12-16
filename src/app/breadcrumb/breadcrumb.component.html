@@ -1,0 +1,7 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+    <li class="breadcrumb-item" *ngFor="let link of links"><a [routerLink]="link[0]">{{ link[1] }}</a></li>
+    <li class="breadcrumb-item active" *ngIf="activeLink" aria-current="page">{{ activeLink }}</li>
+  </ol>
+</nav>
