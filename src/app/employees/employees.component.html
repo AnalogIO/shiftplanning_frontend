@@ -1,3 +1,29 @@
-<p>
-  employees works!
-</p>
+<h2>
+  Employees <span *ngIf="employees">({{ employees.length }})</span>
+  <button type="button" class="btn btn-info btn-sm float-right" (click)="syncPodio()">Sync with Podio</button>
+</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">FirstName</th>
+      <th scope="col">LastName</th>
+      <th scope="col">Email</th>
+      <th scope="col">Active</th>
+      <th scope="col">EmployeeTitle</th>
+      <th scope="col">CheckIns</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td scope="row">{{ employee.id }}</td>
+      <td>{{ employee.firstName }}</td>
+      <td>{{ employee.lastName }}</td>
+      <td>{{ employee.email }}</td>
+      <td>{{ employee.active }}</td>
+      <td>{{ employee.employeeTitle }}</td>
+      <td>{{ employee.checkInCount }}</td>
+    </tr>
+  </tbody>
+</table>

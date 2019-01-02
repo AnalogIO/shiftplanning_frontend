@@ -1,6 +1,6 @@
 <div *ngIf="schedule">
   <div class="row">
-    <div class="col">
+    <div class="col-lg">
       <h2>{{schedule.name}}</h2>
       <div>id: {{schedule.id}}</div>
       <div>numberOfWeeks: {{schedule.numberOfWeeks}}</div>
@@ -21,7 +21,7 @@
         </ul>
       </div>
     </div>
-    <div class="col">
+    <div class="col-lg">
       <div *ngIf="!newScheduledShift">
         <app-scheduledshift-detail [isNewScheduledShift]="newScheduledShift" [scheduleId]="schedule.id" [data]="selectedScheduledShift"
           (valueChange)="updateScheduledShift($event)"></app-scheduledshift-detail>

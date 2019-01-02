@@ -6,7 +6,6 @@ export class Employee {
     email: string;
     active: boolean;
     employeeTitle: string;
-    employeeTitleId: number;
     photoRef: string;
     checkInCount: number;
     wantShifts: number;

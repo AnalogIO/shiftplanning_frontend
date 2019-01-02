@@ -15,32 +15,39 @@ export class EmployeeService {
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   public getEmployee(id: number): Observable<Employee> {
-    const url = `${this.apiUrl}/Employees/${id}`;
-    return this.http.get(url, {headers: this.authService.createAuthorizationHeader()} ).pipe(
+    const url = `${this.apiUrl}/employees/${id}`;
+    return this.http.get(url, { headers: this.authService.createAuthorizationHeader() }).pipe(
       tap((Employees: Employee) => {
       }),
       catchError(this.handleError<Employee>('getEmployees'))
     );
   }
-  
+
   public getEmployees(): Observable<Employee[]> {
-    return this.http.get(`${this.apiUrl}/employees`, {headers: this.authService.createAuthorizationHeader()} ).pipe(
+    return this.http.get(`${this.apiUrl}/employees`, { headers: this.authService.createAuthorizationHeader() }).pipe(
       tap((Employees: Employee[]) => {
-        
       }),
       catchError(this.handleError<Employee[]>('getEmployees'))
     );
   }
 
-  private handleError<T> (operation = 'operation', result?: T) {
+  public syncPodioEmployees(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/employees/podiosync?shortKey=analog`, { headers: this.authService.createAuthorizationHeader() }).pipe(
+      tap((Employees: Employee[]) => {
+      }),
+      catchError(this.handleError<Employee[]>('getEmployees'))
+    );
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
- 
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
- 
+
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.error.message}`);
- 
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
