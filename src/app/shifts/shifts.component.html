@@ -1,9 +1,10 @@
 <div class="row">
     <div class="col-lg">
         <h2>Shifts</h2>
-        <p *ngIf="shifts.length == 0">There are no future shifts! Roll out a schedule and future shifts will appear
+        <p *ngIf="shifts && shifts.length == 0">There are no future shifts! Roll out a schedule and future shifts will
+            appear
             here.</p>
-        <table class="table" *ngIf="shifts.length > 0">
+        <table class="table" *ngIf="shifts && shifts.length > 0">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
