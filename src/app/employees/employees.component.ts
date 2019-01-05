@@ -9,7 +9,11 @@ import { Employee } from './employee';
 })
 export class EmployeesComponent implements OnInit {
 
+    baseEmployees: Employee[];
     employees: Employee[];
+
+    showFilter = false;
+
     orderCheckinsDesc = false;
     orderFirstNameDesc = false;
     orderLastNameDesc = false;
@@ -17,6 +21,14 @@ export class EmployeesComponent implements OnInit {
     orderEmailDesc = false;
     orderActiveDesc = false;
     orderEmployeeTitleDesc = false;
+
+    idFilter = "";
+    firstNameFilter = "";
+    lastNameFilter = "";
+    emailFilter = "";
+    employeeTitleFilter = "";
+    checkinFilter = "";
+    activeFilter = "";
 
     constructor(private employeeService: EmployeeService) { }
 
@@ -26,15 +38,22 @@ export class EmployeesComponent implements OnInit {
 
     getEmployees(): void {
         this.employeeService.getEmployees().subscribe(dto => {
-            if (dto != null) this.employees = dto;
+            if (dto != null) {
+                this.employees = dto;
+                // fix empty employeeTitles
+                this.baseEmployees = dto.map(e => {
+                    if (e.employeeTitle === null) e.employeeTitle = "";
+                    return e;
+                });
+            }
         });
     }
 
     syncPodio(): void {
         this.employeeService.syncPodioEmployees().subscribe(dto => {
             if (dto != null) {
-                alert(`Synced ${dto.syncCount} employees with success!`);
                 this.getEmployees();
+                alert(`Synced ${dto.syncCount} employees with success!`);
             }
         });
     }
@@ -100,6 +119,10 @@ export class EmployeesComponent implements OnInit {
         } else {
             this.employees.sort(function (a, b) { return (a.employeeTitle < b.employeeTitle) ? 1 : ((b.employeeTitle < a.employeeTitle) ? -1 : 0); });
         }
+    }
+
+    applyFilter(): void {
+        this.employees = this.baseEmployees.filter(e => e.id.toString().includes(this.idFilter) && e.firstName.toLocaleLowerCase().includes(this.firstNameFilter.toLocaleLowerCase()) && e.lastName.toLowerCase().includes(this.lastNameFilter.toLocaleLowerCase()) && e.email.toLocaleLowerCase().includes(this.emailFilter.toLocaleLowerCase()) && e.checkInCount.toString().includes(this.checkinFilter) && e.employeeTitle.toLocaleLowerCase().includes(this.employeeTitleFilter.toLocaleLowerCase()) && String(e.active).includes(this.activeFilter));
     }
 
 }

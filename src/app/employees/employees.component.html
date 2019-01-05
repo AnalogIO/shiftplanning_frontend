@@ -1,18 +1,68 @@
 <h2>
   Employees <span *ngIf="employees">({{ employees.length }})</span>
   <button type="button" class="btn btn-info btn-sm float-right" (click)="syncPodio()">Sync with Podio</button>
+  <button type="button" class="btn btn-primary btn-sm float-right mr-2" (click)="showFilter = !showFilter">Filter</button>
 </h2>
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th scope="col" (click)="orderById()">Id</th>
-      <th scope="col" (click)="orderByFirstName()">FirstName</th>
-      <th scope="col" (click)="orderByLastName()">LastName</th>
-      <th scope="col" (click)="orderByEmail()">Email</th>
-      <th scope="col" (click)="orderByActive()">Active</th>
-      <th scope="col" (click)="orderByEmployeeTitle()">EmployeeTitle</th>
-      <th scope="col" (click)="orderByCheckIns()">CheckIns</th>
+      <th scope="col">
+        <div *ngIf="showFilter">
+          <div class="form-group">
+            <input type="text" class="form-control" name="filterId" (input)="applyFilter()" [(ngModel)]="idFilter">
+          </div>
+        </div>
+        <span (click)="orderById()">Id</span>
+      </th>
+      <th scope="col">
+        <div *ngIf="showFilter">
+          <div class="form-group">
+            <input type="text" class="form-control" name="filterFirstName" (input)="applyFilter()" [(ngModel)]="firstNameFilter">
+          </div>
+        </div>
+        <span (click)="orderByFirstName()">FirstName</span>
+      </th>
+      <th scope="col">
+        <div *ngIf="showFilter">
+          <div class="form-group">
+            <input type="text" class="form-control" name="filterLastName" (input)="applyFilter()" [(ngModel)]="lastNameFilter">
+          </div>
+        </div>
+        <span (click)="orderByLastName()">LastName</span>
+      </th>
+      <th scope="col">
+        <div *ngIf="showFilter">
+          <div class="form-group">
+            <input type="text" class="form-control" name="filterEmail" (input)="applyFilter()" [(ngModel)]="emailFilter">
+          </div>
+        </div>
+        <span (click)="orderByEmail()">Email</span>
+      </th>
+      <th scope="col">
+        <div *ngIf="showFilter">
+          <div class="form-group">
+            <input type="text" class="form-control" name="filterActive" (input)="applyFilter()" [(ngModel)]="activeFilter">
+          </div>
+        </div>
+        <span (click)="orderByActive()">Active</span>
+      </th>
+      <th scope="col">
+        <div *ngIf="showFilter">
+          <div class="form-group">
+            <input type="text" class="form-control" name="filterEmployeeTitle" (input)="applyFilter()" [(ngModel)]="employeeTitleFilter">
+          </div>
+        </div>
+        <span (click)="orderByEmployeeTitle()">EmployeeTitle</span>
+      </th>
+      <th scope="col">
+        <div *ngIf="showFilter">
+          <div class="form-group">
+            <input type="text" class="form-control" name="filterCheckins" (input)="applyFilter()" [(ngModel)]="checkinFilter">
+          </div>
+        </div>
+        <span (click)="orderByCheckIns()">CheckIns</span>
+      </th>
     </tr>
   </thead>
   <tbody>
