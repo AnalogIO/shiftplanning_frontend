@@ -86,9 +86,9 @@ export class ScheduleService {
         } else {
             // The backend returned an unsuccessful response code.
             // The response body may contain clues as to what went wrong,
-            errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
+            errorMessage = `Server returned code: ${err.status}, error message is: ${err.error.message}`;
         }
-        console.error(errorMessage);
+        console.error(errorMessage, err);
         return throwError(errorMessage);
     }
 }
