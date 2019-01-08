@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Shift } from './shifts/shift';
-import { AuthService } from './auth.service';
+import { Shift } from './shift';
+import { AuthService } from '../login/auth.service';
 
 @Injectable({
   providedIn: 'root'

@@ -11,11 +11,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
-import {
-  AuthGuardService as AuthGuard, AuthGuardService
-} from './auth-guard.service';
+import { AuthGuard } from './auth.guard';
 import { ShiftsComponent } from './shifts/shifts.component';
-import { AuthService } from './auth.service';
+import { AuthService } from './login/auth.service';
 import { EmployeesComponent } from './employees/employees.component';
 import { ShiftDetailComponent } from './shift-detail/shift-detail.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
@@ -65,7 +63,7 @@ const appRoutes: Routes = [
     LoadingBarHttpClientModule,
     NgbModule
   ],
-  providers: [AuthGuardService, AuthService],
+  providers: [AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

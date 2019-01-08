@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from '../employee.service';
+import { EmployeeService } from './employee.service';
 import { Employee } from './employee';
 
 @Component({
@@ -37,25 +37,27 @@ export class EmployeesComponent implements OnInit {
     }
 
     getEmployees(): void {
-        this.employeeService.getEmployees().subscribe(dto => {
-            if (dto != null) {
-                this.employees = dto;
+        this.employeeService.getEmployees().subscribe(
+            employees => {
+                this.employees = employees;
                 // fix empty employeeTitles
-                this.baseEmployees = dto.map(e => {
+                this.baseEmployees = employees.map(e => {
                     if (e.employeeTitle === null) e.employeeTitle = "";
                     return e;
                 });
-            }
-        });
+            },
+            error => alert(<any>error)
+        );
     }
 
     syncPodio(): void {
-        this.employeeService.syncPodioEmployees().subscribe(dto => {
-            if (dto != null) {
+        this.employeeService.syncPodioEmployees().subscribe(
+            data => {
                 this.getEmployees();
-                alert(`Synced ${dto.syncCount} employees with success!`);
-            }
-        });
+                alert(`Synced ${data.syncCount} employees with success!`);
+            },
+            error => alert(<any>error)
+        );
     }
 
     orderByCheckIns(): void {

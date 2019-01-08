@@ -1,47 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleService } from '../schedule.service';
+import { ScheduleService } from './schedule.service';
 import { Schedule } from './schedule';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BreadcrumbService } from '../breadcrumb.service';
+import { BreadcrumbService } from '../breadcrumb/breadcrumb.service';
 
 @Component({
-  selector: 'app-schedules',
-  templateUrl: './schedules.component.html',
-  styleUrls: ['./schedules.component.css']
+    selector: 'app-schedules',
+    templateUrl: './schedules.component.html',
+    styleUrls: ['./schedules.component.css']
 })
 export class SchedulesComponent implements OnInit {
 
-  constructor(private scheduleService: ScheduleService, private modalService: NgbModal) { }
+    constructor(private scheduleService: ScheduleService, private modalService: NgbModal) { }
 
-  schedules: Schedule[];
+    schedules: Schedule[];
 
-  selectedSchedule: Schedule;
+    selectedSchedule: Schedule;
 
-  ngOnInit() {
-    this.getSchedules();
-  }
+    ngOnInit() {
+        this.getSchedules();
+    }
 
-  openModal(content): void {
-    this.modalService.open(content);
-  }
+    openModal(content): void {
+        this.modalService.open(content);
+    }
 
-  getSchedules(): void {
-    this.scheduleService.getSchedules()
-      .subscribe(schedules => this.schedules = schedules);
-  }
+    getSchedules(): void {
+        this.scheduleService.getSchedules().subscribe(
+            schedules => this.schedules = schedules,
+            error => alert(<any>error)
+        );
+    }
 
-  onSelect(schedule: Schedule): void {
-    this.selectedSchedule = schedule;
-  }
+    onSelect(schedule: Schedule): void {
+        this.selectedSchedule = schedule;
+    }
 
-  createSchedule(name: string, numberOfWeeks: number) {
-    this.modalService.dismissAll();
-    this.scheduleService.createSchedule(name, numberOfWeeks)
-      .subscribe(dto => {
-        if (dto != null) {
-          this.schedules.push(dto);
-        }
-      });
-  }
+    createSchedule(name: string, numberOfWeeks: number) {
+        this.modalService.dismissAll();
+        this.scheduleService.createSchedule(name, numberOfWeeks).subscribe(
+            schedule => this.schedules.push(schedule),
+            error => alert(<any>error)
+        );
+    }
 
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, NgZone } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Schedule } from '../schedules/schedule';
-import { ScheduleService } from '../schedule.service';
+import { ScheduleService } from '../schedules/schedule.service';
 import { ScheduledShift } from '../schedules/scheduledShift';
 import { NgbModal, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { BreadcrumbService } from '../breadcrumb.service';
+import { BreadcrumbService } from '../breadcrumb/breadcrumb.service';
 
 @Component({
     selector: 'app-schedule-detail',
@@ -38,10 +38,10 @@ export class ScheduleDetailComponent implements OnInit {
 
     getSchedule(): void {
         const id = +this.route.snapshot.paramMap.get('id');
-        this.scheduleService.getSchedule(id)
-            .subscribe(schedule => {
-                this.schedule = schedule;
-            });
+        this.scheduleService.getSchedule(id).subscribe(
+            schedule => this.schedule = schedule,
+            error => alert(<any>error)
+        );
     }
 
     orderScheduledShifts(scheduledShifts: ScheduledShift[]): ScheduledShift[] {
@@ -83,15 +83,13 @@ export class ScheduleDetailComponent implements OnInit {
     rollout(from: NgbDateStruct, to: NgbDateStruct, startFrom: number): void {
         var fromStr = `${from.day}-${from.month}-${from.year.toString().slice(-2)}`;
         var toStr = `${to.day}-${to.month}-${to.year.toString().slice(-2)}`;
-        this.scheduleService.rollOut(this.schedule.id, fromStr, toStr, startFrom)
-            .subscribe(dto => {
-                if (dto != null) {
-                    this.modalService.dismissAll();
-                    alert(`Rolled out ${dto.length} shifts with success!`);
-                } else {
-                    alert("Could not roll out...");
-                }
-            });
+        this.scheduleService.rollOut(this.schedule.id, fromStr, toStr, startFrom).subscribe(
+            shifts => {
+                this.modalService.dismissAll();
+                alert(`Rolled out ${shifts.length} shifts with success!`);
+            },
+            error => alert(<any>error)
+        );
     }
 
     onSelect(scheduledShift: ScheduledShift): void {
