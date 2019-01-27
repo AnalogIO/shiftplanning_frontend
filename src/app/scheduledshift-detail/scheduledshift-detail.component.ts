@@ -30,8 +30,12 @@ export class ScheduledshiftDetailComponent implements OnInit {
     constructor(private scheduleService: ScheduleService, private employeeService: EmployeeService) { }
 
     ngOnInit() {
+        this.getEmployees();
+    }
+
+    getEmployees(): void {
         this.employeeService.getEmployees().subscribe(employees => {
-            this.employees = employees.map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });
+            this.employees = employees.filter(x => x.active).map((i) => { i.fullName = i.firstName + ' ' + i.lastName; return i; });
         });
     }
 
