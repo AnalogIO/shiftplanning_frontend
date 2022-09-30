@@ -35,6 +35,7 @@ export class AuthService {
     }
 
     private setToken(token: string): void {
+      token = 'bearer ' + token;
         localStorage.setItem('token', token);
     }
 
